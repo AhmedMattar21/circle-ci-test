@@ -44,4 +44,4 @@ workflows:
       - print-world:
               requires:
                 - "print-hello"
-      - say hello
+      - say-hello
