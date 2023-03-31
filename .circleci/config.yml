@@ -32,7 +32,7 @@ jobs:
               at: ~/
         - run:
             name: "Say hello"
-            command: "cat hello.txt"
+            command: "cat ~/hello.txt"
         
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
