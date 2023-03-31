@@ -39,6 +39,7 @@ jobs:
         - run:
             name: "Say hello"
             command: "cat ~/hello.txt"
+        
 
 
   fail_on_purpose:
@@ -49,6 +50,9 @@ jobs:
           - run:
               name: "wrong command"
               command: "echoo Hello"
+          - run:
+              name: "wrong command"
+              command: "echo Hello Error"
               when: on_fail
 
         
