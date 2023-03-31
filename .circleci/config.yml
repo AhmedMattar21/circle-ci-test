@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  print-hello:
+  save-hello:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
@@ -15,33 +15,31 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello"
+          name: "save hello"
+          command: "echo Hello > hello.txt"
 
-  print-world:
+      - persist_to_workspace:
+          root: ~/
+          paths: 
+            - hello.txt
+
+  print-hello:
       docker:
        - image: cimg/node:13.8.0
       steps:
         - checkout
+        - attach_workspace:
+              at: ~/
         - run:
-            name: "Say World"
-            command: "echo World"
- 
-  say-hello:
-      docker:
-       - image: cimg/node:13.8.0
-      steps:
-        - checkout
-        - run:
-            name: "Say hi"
-            command: "echo Hello $Name"
+            name: "Say hello"
+            command: "cat hello.txt"
+        
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - print-hello
-      - print-world:
-              requires:
-                - "print-hello"
-      - say-hello
+      - save-hello
+      - print-hello:
+          requires:
+            - save-hello
