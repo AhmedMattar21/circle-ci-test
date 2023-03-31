@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: "save hello"
-          command: "echo Hello > hello.txt"
+          command: "echo Hello > ~/hello.txt"
 
       - persist_to_workspace:
           root: ~/
