@@ -39,6 +39,18 @@ jobs:
         - run:
             name: "Say hello"
             command: "cat ~/hello.txt"
+
+
+  fail_on_purpose:
+        docker:
+          - image: cimg/node:13.8.0
+        steps:
+          - checkout
+          - run:
+              name: "wrong command"
+              command: "echoo Hello"
+              when: on_fail
+
         
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -49,3 +61,4 @@ workflows:
       - print-hello:
           requires:
             - save-hello
+      - fail_on_purpose
